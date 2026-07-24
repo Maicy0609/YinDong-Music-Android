@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- USB 独占模式 - 设备过滤器 -->
+<!-- 列出应用想要与之交互的 USB 设备类型 -->
+<resources>
+    <!-- 通用 USB 音频类设备 -->
+    <usb-device class="1" />
+
+    <!-- 通用 USB 供应商特定类（部分音频设备使用 0xFF） -->
+    <usb-device class="0" subclass="0" />
+    <!-- USB 音频设备（class=1 已覆盖，此处兜底） -->
+</resources>

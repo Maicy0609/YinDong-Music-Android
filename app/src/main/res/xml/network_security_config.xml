@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+
+    <!--
+        允许所有明文 HTTP 和 HTTPS 访问
+        插件系统需要访问大量第三方音乐 API 域名，无法逐一枚举
+    -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+
+</network-security-config>

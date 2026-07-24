@@ -1,0 +1,1212 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>人字拖 - 薛之谦 | 在线播放</title>
+  <meta name="description" content="打开即可在线播放《人字拖》，支持封面卡片预览与滚动歌词。" />
+  <meta property="og:type" content="music.song" />
+  <meta property="og:title" content="人字拖 - 薛之谦 | 在线播放" />
+  <meta property="og:description" content="打开即可在线播放《人字拖》，支持封面卡片预览与滚动歌词。" />
+  <meta property="og:image" content="https://y.qq.com/music/photo_new/T002R300x300M000002hKiJX4bjcun.jpg" />
+  <meta property="og:url" content="./" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="人字拖 - 薛之谦 | 在线播放" />
+  <meta name="twitter:description" content="打开即可在线播放《人字拖》，支持封面卡片预览与滚动歌词。" />
+  <meta name="twitter:image" content="https://y.qq.com/music/photo_new/T002R300x300M000002hKiJX4bjcun.jpg" />
+  <style>
+    :root {
+      --bg: #070a14;
+      --panel: rgba(16, 22, 40, 0.94);
+      --text: #f5f7ff;
+      --sub-text: #95a1c6;
+      --line: #a0a9c9;
+      --active: #ffffff;
+      --accent: #7a8cff;
+      --border: rgba(255, 255, 255, 0.14);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    body {
+      min-height: 100vh;
+    }
+    .page {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #090f20;
+    }
+    .hero {
+      position: relative;
+      height: 46vh;
+      min-height: 290px;
+      overflow: hidden;
+    }
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+      filter: saturate(1.06);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.32) 56%, rgba(8, 12, 24, 0.96) 100%);
+    }
+    .meta {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      z-index: 2;
+    }
+    .meta h1 {
+      margin: 0 0 6px;
+      font-size: 30px;
+      line-height: 1.12;
+      letter-spacing: 0.4px;
+    }
+    .meta p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 16px;
+    }
+    .meta .status {
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.78);
+    }
+    .panel {
+      margin-top: -18px;
+      position: relative;
+      z-index: 3;
+      border-radius: 24px 24px 0 0;
+      border-top: 1px solid var(--border);
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 16px 16px 26px;
+      min-height: calc(54vh + 18px);
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .play-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.16s ease;
+    }
+    .play-btn:active {
+      transform: scale(0.96);
+    }
+    .seek {
+      flex: 1;
+      min-width: 0;
+    }
+    .seek input[type="range"] {
+      width: 100%;
+      margin: 0;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .time-row {
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--sub-text);
+    }
+    .action-row {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+    }
+    .chip-btn {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 12px;
+      line-height: 1;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chip-btn:active {
+      transform: scale(0.97);
+      background: rgba(255, 255, 255, 0.14);
+    }
+    .lyrics-box {
+      margin-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+    }
+    .lyrics-title {
+      font-size: 13px;
+      color: var(--sub-text);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+    .lyrics-wrap {
+      height: 44vh;
+      overflow: auto;
+      scrollbar-width: none;
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 11%, #000 88%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 11%, #000 88%, transparent 100%);
+      overflow-anchor: none;
+    }
+    .lyrics-wrap::-webkit-scrollbar {
+      display: none;
+    }
+    #lyricsList {
+      margin: 0;
+      padding: 42px 8px 54px;
+      list-style: none;
+      text-align: center;
+      overflow-anchor: none;
+    }
+    #lyricsList li {
+      color: var(--line);
+      font-size: 17px;
+      line-height: 1.95;
+      letter-spacing: 0.2px;
+      transition: color 0.2s ease, font-weight 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease;
+      padding: 1px 0;
+      transform: translateZ(0) scale(1);
+      transform-origin: center center;
+      will-change: transform;
+      word-break: break-word;
+    }
+    #lyricsList li.active {
+      color: var(--active);
+      font-weight: 700;
+      transform: translateZ(0) scale(1.22);
+      text-shadow: 0 0 16px rgba(126, 150, 255, 0.45);
+    }
+    #lyricsList li.hint {
+      color: var(--sub-text);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <img id="coverImage" src="https://y.qq.com/music/photo_new/T002R300x300M000002hKiJX4bjcun.jpg" alt="歌曲封面" />
+      <div class="meta">
+        <h1 id="songTitle">人字拖</h1>
+        <p id="songArtist">薛之谦</p>
+        <div id="statusText" class="status">准备就绪，点播放开始</div>
+      </div>
+    </header>
+
+    <main class="panel">
+      <audio id="audio" preload="metadata"></audio>
+      <section class="controls">
+        <button id="playBtn" class="play-btn" aria-label="播放">
+          <span id="playIcon">▶</span>
+        </button>
+        <div class="seek">
+          <input id="progress" type="range" min="0" max="1000" value="0" />
+          <div class="time-row">
+            <span id="currentTime">00:00</span>
+            <span id="duration">00:00</span>
+          </div>
+        </div>
+      </section>
+      <section class="action-row">
+        <button id="copyLinkBtn" class="chip-btn" type="button">复制分享链接</button>
+        <button id="reloadLyricsBtn" class="chip-btn" type="button">刷新接口数据</button>
+      </section>
+
+      <section class="lyrics-box">
+        <div class="lyrics-title">歌词</div>
+        <div id="lyricsWrap" class="lyrics-wrap">
+          <ul id="lyricsList">
+            <li class="hint">歌词加载中...</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const query = new URLSearchParams(window.location.search);
+
+    function isObject(value) {
+      return value !== null && typeof value === "object";
+    }
+    function upgradeHttpToHttpsIfNeeded(value) {
+      const text = String(value || "").trim();
+      if (!text) return "";
+      if (window.location.protocol === "https:" && /^http:\/\//i.test(text)) {
+        return text.replace(/^http:\/\//i, "https://");
+      }
+      return text;
+    }
+
+    function normalizeUrl(value) {
+      if (typeof value !== "string") return "";
+      const text = value.trim();
+      if (!text) return "";
+      if (text.startsWith("//")) return upgradeHttpToHttpsIfNeeded(window.location.protocol + text);
+      return upgradeHttpToHttpsIfNeeded(text);
+    }
+
+    function uniqStrings(items) {
+      const result = [];
+      const seen = new Set();
+      items.forEach((item) => {
+        const value = String(item || "").trim();
+        if (!value || seen.has(value)) return;
+        seen.add(value);
+        result.push(value);
+      });
+      return result;
+    }
+
+    function buildEndpoint(base, path, params) {
+      try {
+        const safeBase = upgradeHttpToHttpsIfNeeded(base);
+        const url = new URL(path, safeBase.endsWith("/") ? safeBase : safeBase + "/");
+        Object.entries(params || {}).forEach(([key, value]) => {
+          const text = String(value || "").trim();
+          if (!text) return;
+          url.searchParams.set(key, text);
+        });
+        return url.toString();
+      } catch (error) {
+        return "";
+      }
+    }
+
+    function ensurePlayEndpointParams(endpoint, platform, songId, quality) {
+      try {
+        const url = new URL(endpoint, window.location.href);
+        if (!url.searchParams.get("platform")) url.searchParams.set("platform", platform);
+        if (!url.searchParams.get("songId")) url.searchParams.set("songId", songId);
+        if (!url.searchParams.get("quality")) url.searchParams.set("quality", quality);
+        return url.toString();
+      } catch (error) {
+        return endpoint;
+      }
+    }
+
+    function ensureLyricsEndpointParams(endpoint, platform, songId) {
+      try {
+        const url = new URL(endpoint, window.location.href);
+        if (!url.searchParams.get("platform")) url.searchParams.set("platform", platform);
+        if (!url.searchParams.get("songId")) url.searchParams.set("songId", songId);
+        url.searchParams.delete("quality");
+        return url.toString();
+      } catch (error) {
+        return endpoint;
+      }
+    }
+
+    function deriveLyricsEndpointFromPlayEndpoint(playEndpoint, platform, songId) {
+      try {
+        const url = new URL(playEndpoint, window.location.href);
+        const pathMappings = [
+          ["/aura/playurl", "/aura/lyrics"],
+          ["/aura/play_url", "/aura/lyrics"],
+          ["/api/playurl", "/api/lyrics"],
+          ["/api/play_url", "/api/lyrics"]
+        ];
+        const matched = pathMappings.find(([fromPath]) => url.pathname.includes(fromPath));
+        if (!matched) return "";
+        url.pathname = url.pathname.replace(matched[0], matched[1]);
+        if (!url.searchParams.get("platform")) url.searchParams.set("platform", platform);
+        if (!url.searchParams.get("songId")) url.searchParams.set("songId", songId);
+        url.searchParams.delete("quality");
+        return url.toString();
+      } catch (error) {
+        return "";
+      }
+    }
+
+    const defaultPlatform = (query.get("platform") || "QQ音乐").trim();
+    const defaultSongId = (query.get("songId") || "002057Bl2C0tdn").trim();
+    const defaultQuality = (query.get("quality") || "exhigh").trim();
+    const pageOrigin =
+      window.location.origin && window.location.origin !== "null" ? window.location.origin : "";
+    const defaultApiBases = uniqStrings([
+      query.get("apiBase") || "",
+      pageOrigin,
+      "http://106.53.19.128:8080",
+      "http://106.53.19.128:56669",
+      "http://127.0.0.1:56669",
+      "http://localhost:56669",
+      "http://127.0.0.1:56670",
+      "http://localhost:56670",
+      "http://127.0.0.1:8888",
+      "http://localhost:8888",
+      "http://127.0.0.1:3000",
+      "http://localhost:3000",
+      "http://106.53.19.128:8090"
+    ]);
+
+    const explicitApi = normalizeUrl(query.get("api") || "");
+    const explicitLyricsApi = normalizeUrl(query.get("lrcApi") || "");
+    const shareRoutePath = (query.get("sharePath") || "/aura/share").trim() || "/aura/share";
+
+    const defaultPlayCandidates = uniqStrings([
+      explicitApi,
+      ...defaultApiBases.flatMap((base) => [
+        buildEndpoint(base, "/aura/playurl", {
+          platform: defaultPlatform,
+          songId: defaultSongId,
+          quality: defaultQuality
+        }),
+        buildEndpoint(base, "/api/playurl", {
+          platform: defaultPlatform,
+          songId: defaultSongId,
+          quality: defaultQuality
+        })
+      ])
+    ]).map((item) =>
+      ensurePlayEndpointParams(item, defaultPlatform, defaultSongId, defaultQuality)
+    );
+
+    const defaultLyricsCandidates = uniqStrings([
+      explicitLyricsApi,
+      deriveLyricsEndpointFromPlayEndpoint(explicitApi, defaultPlatform, defaultSongId),
+      ...defaultApiBases.flatMap((base) => [
+        buildEndpoint(base, "/aura/lyrics", {
+          platform: defaultPlatform,
+          songId: defaultSongId
+        }),
+        buildEndpoint(base, "/api/lyrics", {
+          platform: defaultPlatform,
+          songId: defaultSongId
+        })
+      ])
+    ]).map((item) =>
+      ensureLyricsEndpointParams(item, defaultPlatform, defaultSongId)
+    );
+
+    const config = {
+      title: (query.get("title") || "人字拖").trim(),
+      artist: (query.get("artist") || "薛之谦").trim(),
+      coverUrl: normalizeUrl(query.get("cover") || "https://y.qq.com/music/photo_new/T002R300x300M000002hKiJX4bjcun.jpg"),
+      api: {
+        enabled: true,
+        platform: defaultPlatform,
+        songId: defaultSongId,
+        quality: defaultQuality,
+        endpointCandidates: defaultPlayCandidates,
+        lyricsEndpointCandidates: defaultLyricsCandidates,
+        method: "GET",
+        headers: {},
+        body: null
+      },
+      audioCandidates: [
+        "./song.mp3",
+        "./tmp_ikun_music_mobile/src/resources/medias/Silence02s.mp3"
+      ],
+      lyricsCandidates: uniqStrings([normalizeUrl(query.get("lrc") || ""), "./lyrics.lrc"])
+    };
+
+    const audio = document.getElementById("audio");
+    const playBtn = document.getElementById("playBtn");
+    const playIcon = document.getElementById("playIcon");
+    const progress = document.getElementById("progress");
+    const currentTimeEl = document.getElementById("currentTime");
+    const durationEl = document.getElementById("duration");
+    const lyricsWrap = document.getElementById("lyricsWrap");
+    const lyricsList = document.getElementById("lyricsList");
+    const songTitleEl = document.getElementById("songTitle");
+    const songArtistEl = document.getElementById("songArtist");
+    const statusTextEl = document.getElementById("statusText");
+    const coverImage = document.getElementById("coverImage");
+    const copyLinkBtn = document.getElementById("copyLinkBtn");
+    const reloadLyricsBtn = document.getElementById("reloadLyricsBtn");
+
+    let lyrics = [];
+    let activeLyricIndex = -1;
+    let pendingSeek = null;
+    let currentAudioCandidateIndex = -1;
+    let currentAudioSource = "none";
+    let currentLyricsCandidates = [...config.lyricsCandidates];
+    let currentApiLyricsCandidates = [...config.api.lyricsEndpointCandidates];
+    let currentApiPlayEndpoint = "";
+    let apiLyricsText = "";
+    let lyricCenterFixTimer = null;
+
+    function setStatus(text) {
+      statusTextEl.textContent = text;
+    }
+
+    function formatTime(seconds) {
+      if (!Number.isFinite(seconds) || seconds < 0) return "00:00";
+      const min = Math.floor(seconds / 60);
+      const sec = Math.floor(seconds % 60);
+      return String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
+    }
+
+    function updatePlayIcon() {
+      const paused = audio.paused;
+      playIcon.textContent = paused ? "▶" : "❚❚";
+      playBtn.setAttribute("aria-label", paused ? "播放" : "暂停");
+    }
+
+    function setSongMeta(meta = {}) {
+      const title = String((meta.title || config.title || "未命名歌曲")).trim();
+      const artist = String((meta.artist || config.artist || "未知歌手")).trim();
+      const coverUrl = normalizeUrl(String(meta.coverUrl || config.coverUrl || ""));
+
+      config.title = title;
+      config.artist = artist;
+      if (coverUrl) config.coverUrl = coverUrl;
+
+      songTitleEl.textContent = config.title;
+      songArtistEl.textContent = config.artist;
+      if (config.coverUrl) coverImage.src = config.coverUrl;
+      document.title = config.title + " - " + config.artist + " | 在线播放";
+    }
+
+    function normalizeArtist(value) {
+      if (Array.isArray(value)) {
+        return value
+          .map((item) => {
+            if (typeof item === "string") return item;
+            if (isObject(item)) return item.name || item.artist || item.singer || "";
+            return "";
+          })
+          .filter(Boolean)
+          .join(" / ");
+      }
+      if (isObject(value)) return value.name || value.artist || value.singer || "";
+      return typeof value === "string" ? value : "";
+    }
+
+    function findFirstByKeys(source, keys) {
+      if (!isObject(source)) return "";
+      const queue = [source];
+      const visited = new Set();
+
+      while (queue.length) {
+        const node = queue.shift();
+        if (!isObject(node) || visited.has(node)) continue;
+        visited.add(node);
+
+        for (const [rawKey, value] of Object.entries(node)) {
+          const key = String(rawKey).toLowerCase();
+          const matched = keys.some((token) => key === token || key.includes(token));
+          if (matched) {
+            if (value === null || value === undefined) continue;
+            if (typeof value === "string" && !value.trim()) continue;
+            return value;
+          }
+          if (isObject(value)) queue.push(value);
+        }
+      }
+      return "";
+    }
+
+    function parseLrc(rawText) {
+      const rows = String(rawText || "").split(/\r?\n/);
+      const result = [];
+      const timeTag = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\]/g;
+
+      for (const row of rows) {
+        const text = row.replace(timeTag, "").trim();
+        timeTag.lastIndex = 0;
+        let match;
+        while ((match = timeTag.exec(row)) !== null) {
+          const minute = Number(match[1]);
+          const second = Number(match[2]);
+          const fraction = (match[3] || "0").padEnd(3, "0").slice(0, 3);
+          const totalSeconds = minute * 60 + second + Number(fraction) / 1000;
+          result.push({
+            time: totalSeconds,
+            text: text || "♪"
+          });
+        }
+      }
+
+      if (!result.length) {
+        const plainLines = rows.map((row) => row.trim()).filter(Boolean);
+        return plainLines.map((line, index) => ({
+          time: index * 4,
+          text: line
+        }));
+      }
+
+      return result.sort((a, b) => a.time - b.time);
+    }
+
+    function parseLyricsLinesArray(items) {
+      if (!Array.isArray(items) || !items.length) return [];
+      const result = [];
+      items.forEach((item, index) => {
+        if (typeof item === "string") {
+          const text = item.trim();
+          if (!text) return;
+          result.push({ time: index * 4, text });
+          return;
+        }
+        if (!isObject(item)) return;
+        const text = String(
+          item.text || item.lineLyric || item.lyric || item.lrc || item.words || ""
+        ).trim();
+        if (!text) return;
+
+        const rawTime = item.timeMs ?? item.time ?? item.startTimeMs ?? item.startTime ?? item.start;
+        const num = Number(rawTime);
+        const seconds = Number.isFinite(num)
+          ? (String(rawTime).toLowerCase().includes("ms") || num > 1000 ? num / 1000 : num)
+          : index * 4;
+        result.push({ time: Math.max(0, seconds), text });
+      });
+      return result.sort((a, b) => a.time - b.time);
+    }
+
+    function extractLyricsFromPayload(payload) {
+      const roots = [];
+      if (payload !== null && payload !== undefined) roots.push(payload);
+      if (isObject(payload)) {
+        if (payload.data !== undefined) roots.push(payload.data);
+        if (payload.result !== undefined) roots.push(payload.result);
+      }
+
+      for (const root of roots) {
+        if (typeof root === "string" && root.trim()) {
+          return parseLrc(root);
+        }
+        if (Array.isArray(root)) {
+          const lines = parseLyricsLinesArray(root);
+          if (lines.length) return lines;
+        }
+        if (!isObject(root)) continue;
+
+        const lines = parseLyricsLinesArray(root.lines);
+        if (lines.length) return lines;
+
+        const lrcText = String(
+          root.lrcText ||
+          root.lyrics ||
+          root.lyric ||
+          root.lrc ||
+          ""
+        ).trim();
+        if (lrcText) return parseLrc(lrcText);
+      }
+
+      return [];
+    }
+
+    function renderLyrics() {
+      lyricsList.innerHTML = "";
+      activeLyricIndex = -1;
+      updateLyricsViewportPadding();
+      if (!lyrics.length) {
+        lyricsList.innerHTML = "<li class=\"hint\">暂无歌词（接口未返回或本地歌词为空）</li>";
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      lyrics.forEach((line, index) => {
+        const li = document.createElement("li");
+        li.textContent = line.text;
+        li.dataset.index = String(index);
+        fragment.appendChild(li);
+      });
+      lyricsList.appendChild(fragment);
+      updateLyricsViewportPadding();
+    }
+
+    function updateLyricsViewportPadding() {
+      const viewportHeight = lyricsWrap.clientHeight || 0;
+      if (viewportHeight <= 0) return;
+      const centerPadding = Math.max(42, Math.floor(viewportHeight / 2 - 34));
+      lyricsList.style.paddingTop = centerPadding + "px";
+      lyricsList.style.paddingBottom = centerPadding + "px";
+    }
+
+    function scrollCurrentLyricIntoCenter(behavior = "smooth") {
+      if (activeLyricIndex < 0) return;
+      const current = lyricsList.children[activeLyricIndex];
+      if (!current) return;
+      const wrapRect = lyricsWrap.getBoundingClientRect();
+      const currentRect = current.getBoundingClientRect();
+      const centerDelta =
+        currentRect.top + currentRect.height / 2 -
+        (wrapRect.top + wrapRect.height / 2);
+      const targetTop = lyricsWrap.scrollTop + centerDelta;
+      lyricsWrap.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior
+      });
+    }
+
+    function findLyricIndex(time) {
+      let left = 0;
+      let right = lyrics.length - 1;
+      let ans = -1;
+      while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (lyrics[mid].time <= time) {
+          ans = mid;
+          left = mid + 1;
+        } else {
+          right = mid - 1;
+        }
+      }
+      return ans;
+    }
+
+    function syncLyrics(time) {
+      if (!lyrics.length) return;
+      const nextIndex = findLyricIndex(time);
+      if (nextIndex === activeLyricIndex) return;
+
+      if (activeLyricIndex >= 0) {
+        const prev = lyricsList.children[activeLyricIndex];
+        if (prev) prev.classList.remove("active");
+      }
+
+      activeLyricIndex = nextIndex;
+      if (nextIndex < 0) return;
+      const current = lyricsList.children[nextIndex];
+      if (!current) return;
+      current.classList.add("active");
+      requestAnimationFrame(() => {
+        scrollCurrentLyricIntoCenter("smooth");
+        if (lyricCenterFixTimer) clearTimeout(lyricCenterFixTimer);
+        lyricCenterFixTimer = setTimeout(() => {
+          scrollCurrentLyricIntoCenter("auto");
+        }, 190);
+      });
+    }
+
+    function updateReadyStatus() {
+      if (!audio.getAttribute("src")) {
+        setStatus("未找到可用音频，请检查接口配置或提供 song.mp3");
+        return;
+      }
+      if (currentAudioSource === "api") {
+        setStatus("接口音频已就绪，点播放开始");
+      } else if (currentAudioSource === "fallback") {
+        setStatus("主音频不可用，已切到兜底音频");
+      } else {
+        setStatus("准备就绪，点播放开始");
+      }
+    }
+
+    function buildRuntimeApiLyricsCandidates(trackLyricsUrl, playEndpoint) {
+      return uniqStrings([
+        normalizeUrl(trackLyricsUrl || ""),
+        deriveLyricsEndpointFromPlayEndpoint(
+          playEndpoint || "",
+          config.api.platform,
+          config.api.songId
+        ),
+        ...config.api.lyricsEndpointCandidates
+      ]).map((item) =>
+        ensureLyricsEndpointParams(item, config.api.platform, config.api.songId)
+      );
+    }
+
+    function applyTrack(track, source, resolvedPlayEndpoint = "") {
+      if (!track || !track.audioUrl) return false;
+      const nextTitle = track.title || config.title;
+      const nextArtist = track.artist || config.artist;
+      const nextCover = track.coverUrl || config.coverUrl;
+      setSongMeta({
+        title: nextTitle,
+        artist: nextArtist,
+        coverUrl: nextCover
+      });
+
+      audio.src = track.audioUrl;
+      audio.load();
+      currentAudioSource = source;
+      currentAudioCandidateIndex = source === "api" ? -1 : currentAudioCandidateIndex;
+
+      apiLyricsText = track.lyricsText ? String(track.lyricsText) : "";
+      currentApiPlayEndpoint = source === "api" ? String(resolvedPlayEndpoint || "") : "";
+      currentApiLyricsCandidates = source === "api"
+        ? buildRuntimeApiLyricsCandidates(track.lyricsUrl, currentApiPlayEndpoint)
+        : [...config.api.lyricsEndpointCandidates];
+      currentLyricsCandidates = track.lyricsUrl
+        ? [track.lyricsUrl, ...config.lyricsCandidates]
+        : [...config.lyricsCandidates];
+      return true;
+    }
+
+    function loadAudioCandidate(index, announce = true) {
+      if (index < 0 || index >= config.audioCandidates.length) {
+        audio.removeAttribute("src");
+        audio.load();
+        currentAudioCandidateIndex = config.audioCandidates.length;
+        currentAudioSource = "none";
+        currentApiPlayEndpoint = "";
+        if (announce) setStatus("本地兜底音频不可用，请检查接口或音频文件");
+        return false;
+      }
+
+      currentAudioCandidateIndex = index;
+      currentAudioSource = index === 0 ? "local" : "fallback";
+      audio.src = config.audioCandidates[index];
+      audio.load();
+      apiLyricsText = "";
+      currentApiPlayEndpoint = "";
+      currentApiLyricsCandidates = [...config.api.lyricsEndpointCandidates];
+      currentLyricsCandidates = [...config.lyricsCandidates];
+
+      if (announce && index > 0) {
+        setStatus("接口/主音频失败，已自动切到兜底音频");
+      }
+      return true;
+    }
+
+    function switchToNextAudioCandidate() {
+      const nextIndex = currentAudioCandidateIndex < 0 ? 0 : currentAudioCandidateIndex + 1;
+      return loadAudioCandidate(nextIndex);
+    }
+
+    function extractTrackFromPayload(payload) {
+      const roots = [];
+      if (payload !== null && payload !== undefined) roots.push(payload);
+      if (isObject(payload)) {
+        if (payload.data !== undefined) roots.push(payload.data);
+        if (payload.result !== undefined) roots.push(payload.result);
+        if (payload.song !== undefined) roots.push(payload.song);
+      }
+
+      const normalizedRoots = roots
+        .map((item) => (Array.isArray(item) ? item[0] : item))
+        .filter((item) => item !== undefined && item !== null);
+
+      const pick = (keys) => {
+        for (const root of normalizedRoots) {
+          const value = findFirstByKeys(root, keys);
+          if (value !== "") return value;
+        }
+        return "";
+      };
+
+      const rawTitle = pick(["title", "name", "songname", "musicname"]);
+      const rawArtist = pick(["artist", "singer", "author", "artists", "artistname"]);
+      const rawAudioUrl = pick([
+        "audiourl",
+        "songurl",
+        "playurl",
+        "musicurl",
+        "streamurl",
+        "sourceurl",
+        "src",
+        "mp3",
+        "file",
+        "url"
+      ]);
+      const rawCoverUrl = pick(["cover", "coverurl", "pic", "picurl", "image", "img", "artwork"]);
+      const rawLyricsUrl = pick(["lyricsurl", "lyricurl", "lrcurl", "lyricfile", "lrcfile"]);
+      let rawLyricsText = pick(["lyrics", "lyric", "lrc", "krc", "lrcText"]);
+      if (isObject(rawLyricsText)) {
+        rawLyricsText = rawLyricsText.lyric || rawLyricsText.lrc || rawLyricsText.text || "";
+      }
+
+      return {
+        title: String(rawTitle || "").trim(),
+        artist: String(normalizeArtist(rawArtist) || "").trim(),
+        audioUrl: normalizeUrl(String(rawAudioUrl || "")),
+        coverUrl: normalizeUrl(String(rawCoverUrl || "")),
+        lyricsUrl: normalizeUrl(String(rawLyricsUrl || "")),
+        lyricsText: typeof rawLyricsText === "string" ? rawLyricsText.trim() : ""
+      };
+    }
+
+    function createApiRequestInit() {
+      const method = String(config.api.method || "GET").toUpperCase();
+      const headers = { ...(config.api.headers || {}) };
+      const requestInit = { method, headers };
+
+      if (method !== "GET" && config.api.body !== null && config.api.body !== undefined) {
+        if (typeof config.api.body === "string") {
+          requestInit.body = config.api.body;
+        } else {
+          const headerKeys = Object.keys(headers).map((key) => key.toLowerCase());
+          if (!headerKeys.includes("content-type")) headers["Content-Type"] = "application/json";
+          requestInit.body = JSON.stringify(config.api.body);
+        }
+      }
+      return requestInit;
+    }
+
+    async function parsePayloadFromResponse(response) {
+      const contentType = (response.headers.get("content-type") || "").toLowerCase();
+      const raw = (await response.text()).trim();
+      if (!raw) return null;
+      if (contentType.includes("application/json") || raw.startsWith("{") || raw.startsWith("[")) {
+        try {
+          return JSON.parse(raw);
+        } catch (error) {
+          return raw;
+        }
+      }
+      return raw;
+    }
+
+    async function requestTrackFromApi() {
+      if (!config.api.enabled || !config.api.endpointCandidates.length) return null;
+      const requestInit = createApiRequestInit();
+
+      for (const endpointCandidate of config.api.endpointCandidates) {
+        const endpoint = ensurePlayEndpointParams(
+          endpointCandidate,
+          config.api.platform,
+          config.api.songId,
+          config.api.quality
+        );
+        if (!endpoint) continue;
+        try {
+          const response = await fetch(endpoint, requestInit);
+          if (!response.ok) continue;
+          const payload = await parsePayloadFromResponse(response);
+          let track;
+          if (typeof payload === "string" && /^https?:\/\//i.test(payload)) {
+            track = {
+              title: config.title,
+              artist: config.artist,
+              audioUrl: payload,
+              coverUrl: config.coverUrl,
+              lyricsUrl: "",
+              lyricsText: ""
+            };
+          } else {
+            track = extractTrackFromPayload(payload);
+          }
+          if (track && track.audioUrl) return { track, endpoint };
+        } catch (error) {
+          continue;
+        }
+      }
+      return null;
+    }
+
+    function buildTrackFromQuery() {
+      const audioUrl = normalizeUrl(query.get("audio") || "");
+      if (!audioUrl) return null;
+      return {
+        title: (query.get("title") || config.title || "").trim(),
+        artist: (query.get("artist") || config.artist || "").trim(),
+        coverUrl: normalizeUrl(query.get("cover") || config.coverUrl || ""),
+        audioUrl,
+        lyricsUrl: normalizeUrl(query.get("lrc") || ""),
+        lyricsText: (query.get("lyrics") || "").trim()
+      };
+    }
+
+    async function tryLoadFromApi() {
+      const queryTrack = buildTrackFromQuery();
+      if (queryTrack && applyTrack(queryTrack, "api")) {
+        setStatus("已通过链接参数加载接口音频");
+        return true;
+      }
+
+      if (!config.api.enabled || !config.api.endpointCandidates.length) return false;
+
+      try {
+        setStatus("正在请求项目内置接口音乐...");
+        const apiResult = await requestTrackFromApi();
+        if (!apiResult || !apiResult.track || !apiResult.track.audioUrl) {
+          throw new Error("api track empty");
+        }
+        applyTrack(apiResult.track, "api", apiResult.endpoint);
+        setStatus("项目接口音乐已加载，点播放开始");
+        return true;
+      } catch (error) {
+        setStatus("接口加载失败，自动切换兜底（HTTPS 页面可能拦截了 HTTP 接口）");
+        return false;
+      }
+    }
+
+    async function fetchTextFromCandidates(candidates) {
+      for (const url of candidates) {
+        if (!url) continue;
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) continue;
+          const text = await response.text();
+          if (!text.trim()) continue;
+          return text;
+        } catch (error) {
+          continue;
+        }
+      }
+      return "";
+    }
+
+    async function fetchLyricsFromApiCandidates(candidates) {
+      for (const endpointCandidate of candidates) {
+        const endpoint = ensureLyricsEndpointParams(
+          endpointCandidate,
+          config.api.platform,
+          config.api.songId
+        );
+        if (!endpoint) continue;
+        try {
+          const response = await fetch(endpoint, { cache: "no-store" });
+          if (!response.ok) continue;
+          const contentType = (response.headers.get("content-type") || "").toLowerCase();
+          const raw = (await response.text()).trim();
+          if (!raw) continue;
+
+          if (contentType.includes("application/json") || raw.startsWith("{") || raw.startsWith("[")) {
+            try {
+              const payload = JSON.parse(raw);
+              const lines = extractLyricsFromPayload(payload);
+              if (lines.length) return lines;
+            } catch (error) {
+              continue;
+            }
+          }
+
+          const lines = parseLrc(raw);
+          if (lines.length) return lines;
+        } catch (error) {
+          continue;
+        }
+      }
+      return [];
+    }
+
+    async function loadLyrics() {
+      try {
+        let resolvedLines = [];
+
+        if (apiLyricsText) {
+          resolvedLines = parseLrc(apiLyricsText);
+        }
+
+        if (!resolvedLines.length && currentApiLyricsCandidates.length) {
+          resolvedLines = await fetchLyricsFromApiCandidates(currentApiLyricsCandidates);
+        }
+
+        if (!resolvedLines.length) {
+          const text = await fetchTextFromCandidates(currentLyricsCandidates);
+          if (text) resolvedLines = parseLrc(text);
+        }
+
+        if (!resolvedLines.length) throw new Error("lyrics missing");
+        lyrics = resolvedLines;
+        renderLyrics();
+        if (audio.readyState >= 1) updateReadyStatus();
+        else setStatus("歌词已加载，音频加载中...");
+      } catch (error) {
+        lyrics = [];
+        renderLyrics();
+        if (audio.readyState >= 1) updateReadyStatus();
+        else setStatus("未找到歌词文件，默认显示空歌词");
+      }
+    }
+
+    async function refreshAll() {
+      const apiLoaded = await tryLoadFromApi();
+      if (!apiLoaded && currentAudioSource === "none") {
+        loadAudioCandidate(0, false);
+      }
+      await loadLyrics();
+    }
+
+    function resolveShareApiBase() {
+      const explicitShareApiBase = normalizeUrl(query.get("shareApiBase") || "");
+      if (explicitShareApiBase) return explicitShareApiBase;
+
+      const endpointCandidates = uniqStrings([
+        currentApiPlayEndpoint,
+        ...(config.api.endpointCandidates || [])
+      ]);
+      for (const endpoint of endpointCandidates) {
+        try {
+          const url = new URL(endpoint, window.location.href);
+          if (url.protocol === "http:" || url.protocol === "https:") {
+            return url.origin;
+          }
+        } catch (error) {
+          continue;
+        }
+      }
+      return "";
+    }
+
+    function buildPlayerUrlForShare() {
+      const url = new URL(window.location.href);
+      url.searchParams.set("platform", config.api.platform);
+      url.searchParams.set("songId", config.api.songId);
+      url.searchParams.set("quality", config.api.quality);
+      url.searchParams.set("title", config.title);
+      url.searchParams.set("artist", config.artist);
+      if (config.coverUrl) url.searchParams.set("cover", config.coverUrl);
+
+      const resolvedApiBase = resolveShareApiBase();
+      if (resolvedApiBase) {
+        url.searchParams.set("apiBase", resolvedApiBase);
+      }
+      return url.toString();
+    }
+
+    function buildShareLink() {
+      const playerUrl = buildPlayerUrlForShare();
+      const shareApiBase = resolveShareApiBase();
+      if (!shareApiBase) return playerUrl;
+
+      try {
+        const shareUrl = new URL(
+          shareRoutePath,
+          shareApiBase.endsWith("/") ? shareApiBase : shareApiBase + "/"
+        );
+        shareUrl.searchParams.set("platform", config.api.platform);
+        shareUrl.searchParams.set("songId", config.api.songId);
+        shareUrl.searchParams.set("quality", config.api.quality);
+        shareUrl.searchParams.set("title", config.title);
+        shareUrl.searchParams.set("artist", config.artist);
+        if (config.coverUrl) shareUrl.searchParams.set("cover", config.coverUrl);
+        shareUrl.searchParams.set("target", playerUrl);
+        return shareUrl.toString();
+      } catch (error) {
+        return playerUrl;
+      }
+    }
+
+    async function copyCurrentLink() {
+      const url = buildShareLink();
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = url;
+          textarea.setAttribute("readonly", "true");
+          textarea.style.position = "absolute";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+        }
+        const originalText = copyLinkBtn.textContent;
+        copyLinkBtn.textContent = "已复制";
+        setTimeout(() => {
+          copyLinkBtn.textContent = originalText;
+        }, 1200);
+      } catch (error) {
+        setStatus("复制失败，请手动复制地址栏链接");
+      }
+    }
+
+    copyLinkBtn.addEventListener("click", copyCurrentLink);
+    reloadLyricsBtn.addEventListener("click", refreshAll);
+
+    playBtn.addEventListener("click", async () => {
+      if (!audio.getAttribute("src")) {
+        setStatus("未找到可用音频，请检查接口配置或提供 song.mp3");
+        return;
+      }
+      try {
+        if (audio.paused) {
+          await audio.play();
+        } else {
+          audio.pause();
+        }
+      } catch (error) {
+        setStatus("播放失败：请检查接口返回的音频地址和格式");
+      }
+    });
+
+    progress.addEventListener("input", () => {
+      if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+      pendingSeek = (Number(progress.value) / 1000) * audio.duration;
+      currentTimeEl.textContent = formatTime(pendingSeek);
+    });
+
+    progress.addEventListener("change", () => {
+      if (pendingSeek === null) return;
+      audio.currentTime = pendingSeek;
+      pendingSeek = null;
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+      updateReadyStatus();
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (pendingSeek === null && Number.isFinite(audio.duration) && audio.duration > 0) {
+        progress.value = String(Math.floor((audio.currentTime / audio.duration) * 1000));
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+      }
+      syncLyrics(audio.currentTime);
+    });
+
+    audio.addEventListener("play", updatePlayIcon);
+    audio.addEventListener("pause", updatePlayIcon);
+    audio.addEventListener("ended", () => {
+      updatePlayIcon();
+      setStatus("播放结束");
+    });
+
+    audio.addEventListener("error", async () => {
+      if (currentAudioSource === "api") {
+        const switched = loadAudioCandidate(0);
+        if (switched) {
+          await loadLyrics();
+          return;
+        }
+      }
+      const switched = switchToNextAudioCandidate();
+      if (switched) {
+        await loadLyrics();
+      } else {
+        setStatus("接口与本地兜底音频都不可用");
+      }
+    });
+
+    async function init() {
+      setSongMeta();
+      updateLyricsViewportPadding();
+      const apiLoaded = await tryLoadFromApi();
+      if (!apiLoaded) {
+        loadAudioCandidate(0, false);
+      }
+      await loadLyrics();
+      updatePlayIcon();
+    }
+    window.addEventListener("resize", () => {
+      updateLyricsViewportPadding();
+      if (lyricCenterFixTimer) clearTimeout(lyricCenterFixTimer);
+      scrollCurrentLyricIntoCenter("auto");
+    });
+
+    init();
+  </script>
+</body>
+</html>

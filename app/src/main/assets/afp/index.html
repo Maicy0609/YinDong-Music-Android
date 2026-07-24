@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>AFP</title></head>
+<body>
+<script src="afp.wasm.js"></script>
+<script src="afp.js"></script>
+<script>
+var fpInitDone = false;
+
+function initFP() {
+    if (typeof AudioFingerprintRuntime === 'undefined') {
+        Android.onFPError('AudioFingerprintRuntime not loaded');
+        return;
+    }
+    try {
+        var fpRuntime = AudioFingerprintRuntime();
+        var monitor = setInterval(function() {
+            if (typeof fpRuntime.ExtractQueryFP === 'function') {
+                clearInterval(monitor);
+                fpInitDone = true;
+                Android.onFPReady();
+            }
+        }, 50);
+        setTimeout(function() {
+            if (!fpInitDone) {
+                clearInterval(monitor);
+                Android.onFPError('FP init timeout');
+            }
+        }, 15000);
+    } catch(e) {
+        Android.onFPError('FP init error: ' + e.message);
+    }
+}
+
+function generateFingerprint(jsonSamples) {
+    if (!fpInitDone) {
+        Android.onFPError('FP not initialized');
+        return;
+    }
+    try {
+        Android.onLog('开始生成指纹, 样本数=' + jsonSamples.length);
+        var samples = JSON.parse(jsonSamples);
+        var pcmBuffer = new Float32Array(samples);
+        Android.onLog('PCM buffer size=' + pcmBuffer.length);
+
+        var fpRuntime = AudioFingerprintRuntime();
+        var monitor = setInterval(function() {
+            if (typeof fpRuntime.ExtractQueryFP === 'function') {
+                clearInterval(monitor);
+                try {
+                    var fpVector = fpRuntime.ExtractQueryFP(pcmBuffer.buffer);
+                    var size = fpVector.size();
+                    Android.onLog('FP vector size=' + size);
+                    var resultBuf = new Uint8Array(size);
+                    for (var t = 0; t < size; t++) {
+                        resultBuf[t] = fpVector.get(t);
+                    }
+                    var chunks = [];
+                    var chunkSize = 8192;
+                    for (var i = 0; i < resultBuf.length; i += chunkSize) {
+                        var chunk = resultBuf.subarray(i, i + chunkSize);
+                        chunks.push(String.fromCharCode.apply(null, chunk));
+                    }
+                    var fingerprint = btoa(chunks.join(''));
+                    Android.onLog('指纹生成完成, base64长度=' + fingerprint.length);
+                    Android.onFPGGenerated(fingerprint);
+                } catch(e2) {
+                    Android.onFPError('ExtractQueryFP error: ' + e2.message);
+                }
+            }
+        }, 50);
+        setTimeout(function() {
+            clearInterval(monitor);
+            Android.onFPError('FP runtime init timeout for generation');
+        }, 15000);
+    } catch(e) {
+        Android.onFPError('FP gen error: ' + e.message);
+    }
+}
+
+initFP();
+</script>
+</body>
+</html>

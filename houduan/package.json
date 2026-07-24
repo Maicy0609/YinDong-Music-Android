@@ -1,0 +1,16 @@
+{
+  "name": "yd-verify-server",
+  "version": "1.0.0",
+  "description": "软件启动远程联网校验后端服务（托管 4 个 txt 校验文件）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:https": "HTTPS=true node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "keywords": ["verify", "license", "校验", "授权"],
+  "license": "MIT"
+}

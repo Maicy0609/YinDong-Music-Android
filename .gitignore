@@ -1,0 +1,47 @@
+# ========== 安卓构建与原生编译产物（原有规则，完整保留） ==========
+*.iml
+.gradle
+/local.properties
+/.idea
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+/app/build
+/build
+
+# ========== IDE / 编辑器本地配置 ==========
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ========== 系统垃圾文件 ==========
+.DS_Store
+Thumbs.db
+
+# ========== 敏感配置、运行日志与缓存 ==========
+*.log
+logs/
+.env
+.env.local
+.env.*
+.cache/
+.temp/
+tmp/
+
+# ========== Node / 前端依赖（项目不含Node部分可删除本段） ==========
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+out/
+
+# ========== 备份文件与压缩包 ==========
+*_backup.txt
+server-upload.zip
+*.zip
+*.rar
+*.apk
+*.exe
