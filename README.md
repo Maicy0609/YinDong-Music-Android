@@ -721,9 +721,9 @@ npm start
 
 ```
 LyricsApi（入口）
-├── KugouProvider    — 酷狗歌词
-├── NeteaseProvider  — 网易云歌词
-└── QQMusicProvider  — QQ音乐歌词
+├── KugouProvider    — KG歌词
+├── NeteaseProvider  — WY歌词
+└── QQMusicProvider  — TX音乐歌词
 ```
 
 ### 核心功能
@@ -736,9 +736,9 @@ LyricsApi（入口）
 
 | 代码  | 平台  |
 | --- | --- |
-| `kg` | 酷狗音乐 |
-| `ne` | 网易云音乐 |
-| `qq` | QQ音乐 |
+| `kg` | KG音乐 |
+| `ne` | WY音乐 |
+| `tx` | TX音乐 |
 
 ---
 
@@ -880,29 +880,29 @@ kotlin.incremental=true
 | --- | --- |
 | API 模式 | 本地 API / 官方 API |
 | API 地址 | 你的音源 API 服务地址 |
-| QQ音乐 API Key | QQ音乐平台密钥 |
-| 网易云 API Key | 网易云平台密钥 |
-| 酷我音乐 API Key | 酷我平台密钥 |
-| 咪咕音乐 API Key | 咪咕平台密钥 |
-| 酷狗音乐 API Key | 酷狗平台密钥 |
-| QQ Cookie | QQ音乐 Cookie（获取播放链接） |
+| TX音乐 API Key | TX音乐平台密钥 |
+| WY API Key | WY平台密钥 |
+| KW音乐 API Key | KW平台密钥 |
+| MG音乐 API Key | MG平台密钥 |
+| KG音乐 API Key | KG平台密钥 |
+| TX Cookie | TX音乐 Cookie（获取播放链接） |
 
 ### API Key 格式要求
 
 - 长度：16-128 位
 - 字符：只能包含字母(a-z A-Z)和数字(0-9)
 
-### QQ音乐 Cookie 获取
+### TX音乐 Cookie 获取
 
 **手机获取**：
 
-1. 手机浏览器打开QQ音乐网页版并登录
+1. 手机浏览器打开TX音乐网页版并登录
 2. 在地址栏输入 `javascript:alert(document.cookie)`
 3. 复制弹出的 Cookie 内容
 
 **电脑获取**：
 
-1. 电脑浏览器打开QQ音乐网页版并登录
+1. 电脑浏览器打开TX音乐网页版并登录
 2. 按 F12 打开开发者工具 → Network 标签
 3. 刷新页面，点击任意请求
 4. 在 Headers → Request Headers 中找到 Cookie 行，复制整串内容
