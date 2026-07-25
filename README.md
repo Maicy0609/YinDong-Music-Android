@@ -2,9 +2,9 @@
 
 一个基于 Jetpack Compose 的 Android 音乐播放器，支持多平台音乐搜索和播放。
 
-[![GitHub stars](https://img.shields.io/github/stars/88541/YinDong-Music?style=flat-square)](https://github.com/88541/YinDong-Music/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/88541/YinDong-Music?style=flat-square)](https://github.com/88541/YinDong-Music/network)
-[![GitHub license](https://img.shields.io/github/license/88541/YinDong-Music?style=flat-square)](https://github.com/88541/YinDong-Music/blob/main/LICENSE)
+[](https://github.com/88541/YinDong-Music/stargazers)
+[](https://github.com/88541/YinDong-Music/network)
+[](https://github.com/88541/YinDong-Music/blob/main/LICENSE)
 
 > **版本**：v3.0.4（versionCode 33）  
 > **协议**：MIT License  
@@ -61,7 +61,7 @@
 | 目录  | 说明  |
 | --- | --- |
 | `houduan/` | Node.js 后端（校验服务 + 静态 txt 托管） |
-| `kotlin/com/lyrics/api/` | 独立歌词 API 模块（酷狗/网易/QQ Provider） |
+| `kotlin/com/lyrics/api/` | 独立歌词 API 模块（KG/WY/TX Provider） |
 | `com/whl/quickjs/wrapper/` | QuickJS 引擎 wrapper 源码 |
 | `server/` | Java/Maven 服务端项目（pom.xml） |
 
@@ -71,7 +71,7 @@
 
 ### 核心播放
 
-- **多平台音乐搜索** — 支持网易云、QQ音乐、酷我音乐、酷狗音乐、咪咕音乐五大平台
+- **多平台音乐搜索** — 支持WY、TX音乐、KW音乐、KG音乐、MG音乐五大平台
 - **在线播放** — 基于 ExoPlayer (Media3) 的在线流式播放
 - **多音质选择** — 标准(128kbps)、极高(320kbps)、无损(FLAC)、Hi-Res、超清母带
 - **歌词显示** — 同步歌词、逐字歌词、翻译歌词
@@ -82,8 +82,8 @@
 
 - **实时搜索建议** — 输入时自动提示相关搜索词
 - **热搜榜单** — 显示热门搜索关键词
-- **链接解析** — 支持抖音/汽水音乐分享链接自动解析播放
-- **歌单链接导入** — 支持网易云/QQ/酷我/酷狗歌单链接解析导入
+- **链接解析** — 支持DY/DY音乐分享链接自动解析播放
+- **歌单链接导入** — 支持WY/TX/KW/KG歌单链接解析导入
 - **搜索历史** — 保存搜索记录，方便快速搜索
 - **分类发现** — 抖音热歌、伤感情歌、怀旧金曲等分类
 - **榜单** — 各平台热歌榜、飙升榜等
@@ -367,11 +367,11 @@ QuickJS 引擎线程安全封装：
 
 | 源 ID | 平台  |
 | --- | --- |
-| `wy` | 网易云音乐 |
-| `tx` | QQ音乐 |
-| `kw` | 酷我音乐 |
-| `kg` | 酷狗音乐 |
-| `mg` | 咪咕音乐 |
+| `wy` | WY音乐 |
+| `tx` | TX音乐 |
+| `kw` | KW音乐 |
+| `kg` | KG音乐 |
+| `mg` | MG音乐 |
 
 #### LxSdkMusicUrl
 
@@ -411,10 +411,10 @@ API 配置管理（服务端地址、各平台 API Key 等）。
 
 外部歌单链接解析器：
 
-- 支持网易云（music.163.com / 163cn.tv）
-- 支持QQ音乐
-- 支持酷我音乐
-- 支持酷狗音乐
+- 支持WY音乐
+- 支持TX音乐
+- 支持KW音乐
+- 支持KG音乐
 - 从分享口令文本中提取 URL
 
 ### 5.7 数据层 — MusicFree 插件系统
