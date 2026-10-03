@@ -78,6 +78,33 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: 使用官方仓库（绕过国内镜像在 CI 上不可达的问题）
+        run: |
+          cat > ci-repos.init.gradle <<'EOF'
+          settingsEvaluated { settings ->
+              settings.pluginManagement.repositories.clear()
+              settings.pluginManagement.repositories.gradlePluginPortal()
+              settings.pluginManagement.repositories.google()
+              settings.pluginManagement.repositories.mavenCentral()
+              settings.dependencyResolutionManagement.repositories.clear()
+              settings.dependencyResolutionManagement.repositories.google()
+              settings.dependencyResolutionManagement.repositories.mavenCentral()
+          }
+          EOF
+          cat ci-repos.init.gradle
+
+      - name: 诊断仓库连通性
+        continue-on-error: true
+        run: |
+          for u in \
+            "https://maven.aliyun.com/repository/gradle-plugin/com/google/devtools/ksp/com.google.devtools.ksp.gradle.plugin/1.9.22-1.0.17/com.google.devtools.ksp.gradle.plugin-1.9.22-1.0.17.pom" \
+            "https://plugins.gradle.org/m2/com/google/devtools/ksp/com.google.devtools.ksp.gradle.plugin/1.9.22-1.0.17/com.google.devtools.ksp.gradle.plugin-1.9.22-1.0.17.pom" \
+            "https://repo.maven.apache.org/maven2/com/google/devtools/ksp/symbol-processing-gradle-plugin/1.9.22-1.0.17/symbol-processing-gradle-plugin-1.9.22-1.0.17.pom" \
+            "https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/8.2.2/gradle-8.2.2.pom" ; do
+            echo "== $u"
+            curl -sSL -o /dev/null -w "   http=%{http_code} time=%{time_total}s\n" --max-time 30 "$u" || echo "   curl failed"
+          done
+
       - name: Resolve API key
         id: apikey
         run: |
@@ -94,6 +121,7 @@ jobs:
           API_AUTH_KEY: ${{ steps.apikey.outputs.key }}
         run: |
           ./gradlew assembleDebug \
+            --init-script ci-repos.init.gradle \
             -PAPI_AUTH_KEY="${API_AUTH_KEY}" \
             -Pandroid.suppressUnsupportedCompileSdk=36 \
             --stacktrace
@@ -105,6 +133,7 @@ jobs:
           API_AUTH_KEY: ${{ steps.apikey.outputs.key }}
         run: |
           ./gradlew assembleRelease \
+            --init-script ci-repos.init.gradle \
             -PAPI_AUTH_KEY="${API_AUTH_KEY}" \
             -Pandroid.suppressUnsupportedCompileSdk=36 \
             --stacktrace
