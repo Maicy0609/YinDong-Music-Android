@@ -51,21 +51,32 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Locate Android SDK
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          if [ ! -d "$SDK" ]; then
+            echo "::error::找不到 Android SDK（$SDK）"
+            exit 1
+          fi
+          CMDLINE="$(ls -d "$SDK"/cmdline-tools/*/bin 2>/dev/null | head -1 || true)"
+          if [ -z "$CMDLINE" ]; then
+            echo "::error::找不到 cmdline-tools，无法安装 SDK 组件"
+            exit 1
+          fi
+          echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "$CMDLINE" >> "$GITHUB_PATH"
+          echo "sdk.dir=$SDK" > local.properties
+          chmod +x ./gradlew
 
       - name: Install Android SDK packages
         run: |
-          yes | sdkmanager --licenses > /dev/null 2>&1 || true
-          sdkmanager --install "platform-tools" "platforms;android-36" "build-tools;34.0.0" "build-tools;36.0.0"
+          yes | timeout 180 sdkmanager --sdk_root="$ANDROID_SDK_ROOT" --licenses > /dev/null 2>&1 || true
+          sdkmanager --sdk_root="$ANDROID_SDK_ROOT" --install "platform-tools" "platforms;android-36" "build-tools;34.0.0"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-
-      - name: Prepare build environment
-        run: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
-          chmod +x ./gradlew
 
       - name: Resolve API key
         id: apikey
